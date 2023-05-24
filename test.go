@@ -4,6 +4,19 @@ import (
 	"fmt"
 )
 
+func testFunction(varx int, vary float) int {
+    if 4 != 0 {
+        if 2 != 0 {
+            a = 4
+        }
+        if 2 > 3 {
+            a = 4
+        }
+    }
+    a = 4
+    a = 4
+    a = 4
+}
 func main() {
     if 4 != 0 {
         if 2 != 0 {

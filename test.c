@@ -1,3 +1,22 @@
+
+int testFunction(int varx, float vary)
+{
+    if (4)
+    {
+        if (2)
+        {
+            a = 4;
+        }
+        if (2 > 3)
+        {
+            a = 4;
+        }
+    }
+    a = 4;
+    a = 4;
+    a = 4;
+}
+
 int main()
 {
     if (4)
