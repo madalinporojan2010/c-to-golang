@@ -44,9 +44,10 @@ program: TYPE MAIN '(' ')' '{' multi_statements '}'
 
 multi_statements: multi_lines {asprintf(&$$, "%s", $1);}
     | statement line { asprintf(&$$, "%s%s%*s}\n", $1, $2, nTab - tabSize, ""); nTab-=tabSize; }
-    | statement '{' multi_lines '}' { asprintf(&$$, "%s%s%*s}\n", $1, $3, nTab - tabSize, ""); nTab-=tabSize; }
+    | statement '{' multi_statements '}' { asprintf(&$$, "%s%s%*s}\n", $1, $3, nTab - tabSize, ""); nTab-=tabSize; }
     | multi_statements statement line { asprintf(&$$, "%s%s%s%*s}\n", $1, $2, $3, nTab - tabSize, ""); nTab-=tabSize; }
-    | multi_statements statement '{' multi_lines '}' { asprintf(&$$, "%s%s%s%*s}\n", $1, $2, $4, nTab - tabSize, "");  nTab-=tabSize; }
+    | multi_statements statement '{' multi_statements '}' { asprintf(&$$, "%s%s%s%*s}\n", $1, $2, $4, nTab - tabSize, "");  nTab-=tabSize; }
+    | multi_statements multi_lines { asprintf(&$$, "%s%s", $1, $2); }
     | { asprintf(&$$, ""); }
     ;
 
