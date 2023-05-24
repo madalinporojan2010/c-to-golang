@@ -24,7 +24,7 @@ func main() {
         }
         if 2 > 3 {
             a = 4
-            testFunction(2, 3)
+            testFunction(2 / 5, 3)
         }
     }
     a = 4
@@ -59,6 +59,6 @@ func main() {
             fmt.Printf("%d %s %d %d", 4, "test", 1, 2)
         }
         fmt.Printf("%d %s %d %d", 4, "test", 1, 2)
-        fmt.Printf("%d %s %d %d", 4, "test", 1, 2)
+        fmt.Scanf("%d %s %d %d", 4, "test", 1, 2)
     }
 }

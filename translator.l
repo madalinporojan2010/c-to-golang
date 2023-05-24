@@ -21,6 +21,7 @@
 "if"            return IF;
 "else"          return ELSE;
 "printf"        return PRINTF;
+"scanf"         return SCANF;
 
   /* variables */
 [a-zA-Z]+       {

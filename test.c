@@ -28,7 +28,7 @@ int main()
         if (2 > 3)
         {
             a = 4;
-            testFunction(2, 3);
+            testFunction(2 / 5, 3);
         }
     }
     a = 4;
@@ -67,6 +67,6 @@ int main()
         }
 
         printf("%d %s %d %d", 4, "test", 1, 2);
-        printf("%d %s %d %d", 4, "test", 1, 2);
+        scanf("%d %s %d %d", 4, "test", 1, 2);
     }
 }

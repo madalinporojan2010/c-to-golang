@@ -20,7 +20,7 @@ const char*convertToGOTypes(char *type);
 
 %token GE LE EQ NE
 
-%token PRINTF
+%token PRINTF SCANF
 
 %token <variable> VARIABLE
 %token <type> TYPE
@@ -82,9 +82,8 @@ typed_multiple_arguments: TYPE argument { asprintf(&$$, "%s %s", $2, convertToGO
     |
     ;
 
-argument: VARIABLE { asprintf(&$$, "%s", $1); }
-    | NUMBER { asprintf(&$$, "%s", $1); }
-    | STRING { asprintf(&$$, "%s", $1); }
+argument: STRING { asprintf(&$$, "%s", $1); }
+    | exp { asprintf(&$$, "%s", $1); }
     | { asprintf(&$$, ""); }
     ;
 
@@ -107,6 +106,7 @@ line: assignment ';' { asprintf(&$$, "%*s%s\n", nTab, "", $1); }
     ;
 
 called_function: PRINTF '(' STRING ',' multiple_arguments ')' { asprintf(&$$, "fmt.Printf(%s, %s)", $3, $5); }
+    | SCANF '(' STRING ',' multiple_arguments ')' { asprintf(&$$, "fmt.Scanf(%s, %s)", $3, $5); }
     | VARIABLE '(' multiple_arguments ')' { asprintf(&$$, "%s(%s)", $1, $3); }
     ;
 
