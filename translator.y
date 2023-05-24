@@ -121,6 +121,7 @@ condition: exp { asprintf(&$$, "%s != 0", $1); }
 
 exp: NUMBER { asprintf(&$$, "%s", $1); }
     | VARIABLE { asprintf(&$$, "%s", $1); }
+    | called_function { asprintf(&$$, "%s", $1); }
     | exp '+' exp {asprintf(&$$, "%s + %s", $1, $3);}
     | exp '-' exp {asprintf(&$$, "%s - %s", $1, $3);}
     | exp '*' exp {asprintf(&$$, "%s * %s", $1, $3);}
@@ -138,6 +139,8 @@ assignment: TYPE VARIABLE {asprintf(&$$, "var %s %s", $2, convertToGOTypes($1));
 const char *convertToGOTypes(char *string) {
     if(strcmp(string, "float") == 0) {
         return "float64";
+    } else if(strcmp(string, "char") == 0) {
+        return "byte";
     } else {
         return string;
     }

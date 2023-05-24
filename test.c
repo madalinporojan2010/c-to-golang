@@ -12,7 +12,7 @@ int testFunction(int varx, float vary)
             a = 4;
         }
     }
-    a = 4;
+    char a;
     a = 4;
     a = 4;
 }
@@ -28,6 +28,7 @@ int main()
         if (2 > 3)
         {
             a = 4;
+            testFunction(2, 3);
         }
     }
     a = 4;
@@ -50,7 +51,8 @@ int main()
     {
         while (1 > 3)
         {
-            a = 4 + 2 + 1;
+            a = just(1) + multiple(23, 1, "asdf") + 1;
+            int a = just(1) + multiple(23, 1, "asdf") + 1;
         }
 
         if (4)

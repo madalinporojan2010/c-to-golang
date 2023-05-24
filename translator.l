@@ -6,7 +6,7 @@
 
 %%
 
-("int"|"float") { 
+("int"|"float"|"char") { 
                    yylval.type = strdup(yytext);
                    return TYPE;
                 }

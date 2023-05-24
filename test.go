@@ -13,7 +13,7 @@ func testFunction(varx int, vary float64) int {
             a = 4
         }
     }
-    a = 4
+    var a byte
     a = 4
     a = 4
 }
@@ -24,6 +24,7 @@ func main() {
         }
         if 2 > 3 {
             a = 4
+            testFunction(2, 3)
         }
     }
     a = 4
@@ -46,7 +47,8 @@ func main() {
             if 1 > 3 {
                 break
             }
-            a = 4 + 2 + 1
+            a = just(1) + multiple(23, 1, "asdf") + 1
+            a := just(1) + multiple(23, 1, "asdf") + 1
         }
         if 4 != 0 {
             a = 4
