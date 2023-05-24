@@ -83,6 +83,7 @@ line: assignment ';' { asprintf(&$$, "%*s%s\n", nTab, "", $1); }
     ;
 
 called_function: PRINTF '(' STRING ',' multiple_arguments ')' { asprintf(&$$, "fmt.Printf(%s, %s)", $3, $5); }
+    | VARIABLE '(' multiple_arguments ')' { asprintf(&$$, "%s(%s)", $1, $3); }
     ;
 
 condition: exp { asprintf(&$$, "%s != 0", $1); }

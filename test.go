@@ -25,6 +25,7 @@ func main() {
         if 1 > 3 {
             break
         }
+        justATest("asdfs", "test", 23)
         a = 4 + 2 + 1
     }
     for i := 0; i < 4; i = i + 1 {
@@ -36,10 +37,13 @@ func main() {
         }
         if 4 != 0 {
             a = 4
+            fmt.Printf("%d %s %d %d", 4, "test", 1, 2)
         }
         else if 4 != 0 {
             a = 5
+            fmt.Printf("%d %s %d %d", 4, "test", 1, 2)
         }
+        fmt.Printf("%d %s %d %d", 4, "test", 1, 2)
         fmt.Printf("%d %s %d %d", 4, "test", 1, 2)
     }
 }

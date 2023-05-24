@@ -23,6 +23,7 @@ int main()
 
     while (1 > 3)
     {
+        justATest("asdfs", "test", 23);
         a = 4 + 2 + 1;
     }
 
@@ -36,12 +37,15 @@ int main()
         if (4)
         {
             a = 4;
+            printf("%d %s %d %d", 4, "test", 1, 2);
         }
         else if (4)
         {
             a = 5;
+            printf("%d %s %d %d", 4, "test", 1, 2);
         }
 
+        printf("%d %s %d %d", 4, "test", 1, 2);
         printf("%d %s %d %d", 4, "test", 1, 2);
     }
 }
