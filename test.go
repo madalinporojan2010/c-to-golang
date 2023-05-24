@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-func testFunction(varx int, vary float) int {
+func testFunction(varx int, vary float64) int {
     if 4 != 0 {
         if 2 != 0 {
             a = 4
@@ -30,7 +30,7 @@ func main() {
     a = 4
     a = 4
     a := 4
-    var b float
+    var b float64
     if a > b {
         a = 5
     }

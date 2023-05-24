@@ -8,6 +8,8 @@ void yyerror (char *s);
 
 int tabSize = 4;
 int nTab = 4;
+
+const char*convertToGOTypes(char *type);
 %}
 
 %union {char *number; char *variable; char *type; char *string; char *chr; }         /* Yacc definitions */
@@ -54,7 +56,7 @@ functions: TYPE MAIN '(' typed_multiple_arguments ')' '{' multi_statements '}'
             }
     | TYPE VARIABLE '(' typed_multiple_arguments ')' '{' multi_statements '}'
             { 
-                asprintf(&$$, "func %s(%s) %s {\n", $2, $4, $1);
+                asprintf(&$$, "func %s(%s) %s {\n", $2, $4, convertToGOTypes($1));
                 asprintf(&$$, "%s%s", $$, $7);
                 asprintf(&$$, "%s}", $$);
             }
@@ -75,8 +77,8 @@ multiple_arguments: argument { asprintf(&$$, "%s", $1); }
     | multiple_arguments ',' argument { asprintf(&$$, "%s, %s", $1, $3); }
     ;
 
-typed_multiple_arguments: TYPE argument { asprintf(&$$, "%s %s", $2, $1); }
-    | typed_multiple_arguments ',' TYPE argument { asprintf(&$$, "%s, %s %s", $1, $4, $3); }
+typed_multiple_arguments: TYPE argument { asprintf(&$$, "%s %s", $2, convertToGOTypes($1)); }
+    | typed_multiple_arguments ',' TYPE argument { asprintf(&$$, "%s, %s %s", $1, $4, convertToGOTypes($3)); }
     |
     ;
 
@@ -126,7 +128,17 @@ exp: NUMBER { asprintf(&$$, "%s", $1); }
     ;
 
 
-assignment: TYPE VARIABLE {asprintf(&$$, "var %s %s", $2, $1);}
+assignment: TYPE VARIABLE {asprintf(&$$, "var %s %s", $2, convertToGOTypes($1));}
     | VARIABLE '=' exp {asprintf(&$$, "%s = %s", $1, $3);} 
     | TYPE VARIABLE '=' exp {asprintf(&$$, "%s := %s", $2, $4);} 
     ;
+
+%%
+
+const char *convertToGOTypes(char *string) {
+    if(strcmp(string, "float") == 0) {
+        return "float64";
+    } else {
+        return string;
+    }
+}

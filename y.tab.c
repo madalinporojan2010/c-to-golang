@@ -79,7 +79,9 @@ void yyerror (char *s);
 int tabSize = 4;
 int nTab = 4;
 
-#line 83 "y.tab.c"
+const char*convertToGOTypes(char *type);
+
+#line 85 "y.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -164,10 +166,10 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 13 "translator.y"
+#line 15 "translator.y"
 char *number; char *variable; char *type; char *string; char *chr; 
 
-#line 171 "y.tab.c"
+#line 173 "y.tab.c"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -619,12 +621,12 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    33,    33,    41,    44,    45,    46,    49,    55,    61,
-      64,    65,    66,    67,    68,    69,    70,    74,    75,    78,
-      79,    80,    83,    84,    85,    86,    89,    90,    91,    92,
-      93,    96,    97,    98,   101,   102,   103,   104,   107,   108,
-     111,   112,   113,   114,   115,   116,   117,   120,   121,   122,
-     123,   124,   125,   129,   130,   131
+       0,    35,    35,    43,    46,    47,    48,    51,    57,    63,
+      66,    67,    68,    69,    70,    71,    72,    76,    77,    80,
+      81,    82,    85,    86,    87,    88,    91,    92,    93,    94,
+      95,    98,    99,   100,   103,   104,   105,   106,   109,   110,
+     113,   114,   115,   116,   117,   118,   119,   122,   123,   124,
+     125,   126,   127,   131,   132,   133
 };
 #endif
 
@@ -1264,7 +1266,7 @@ yyreduce:
   switch (yyn)
     {
   case 2: /* program: multiple_functions  */
-#line 33 "translator.y"
+#line 35 "translator.y"
                             {
                 printf("package main\n\n");
                 printf("import (\n");
@@ -1273,325 +1275,325 @@ yyreduce:
 
                 printf("%s", (yyvsp[0].chr));
                 }
-#line 1277 "y.tab.c"
+#line 1279 "y.tab.c"
     break;
 
   case 4: /* multiple_functions: functions  */
-#line 44 "translator.y"
+#line 46 "translator.y"
                               {asprintf(&(yyval.chr), "%s", (yyvsp[0].chr));}
-#line 1283 "y.tab.c"
+#line 1285 "y.tab.c"
     break;
 
   case 5: /* multiple_functions: multiple_functions functions  */
-#line 45 "translator.y"
+#line 47 "translator.y"
                                    {asprintf(&(yyval.chr), "%s\n%s", (yyvsp[-1].chr), (yyvsp[0].chr));}
-#line 1289 "y.tab.c"
+#line 1291 "y.tab.c"
     break;
 
   case 6: /* multiple_functions: %empty  */
-#line 46 "translator.y"
+#line 48 "translator.y"
       {asprintf(&(yyval.chr), "");}
-#line 1295 "y.tab.c"
+#line 1297 "y.tab.c"
     break;
 
   case 7: /* functions: TYPE MAIN '(' typed_multiple_arguments ')' '{' multi_statements '}'  */
-#line 50 "translator.y"
+#line 52 "translator.y"
             { 
                 asprintf(&(yyval.chr), "func main() {\n");
                 asprintf(&(yyval.chr), "%s%s", (yyval.chr), (yyvsp[-1].chr));
                 asprintf(&(yyval.chr), "%s}", (yyval.chr));
             }
-#line 1305 "y.tab.c"
+#line 1307 "y.tab.c"
     break;
 
   case 8: /* functions: TYPE VARIABLE '(' typed_multiple_arguments ')' '{' multi_statements '}'  */
-#line 56 "translator.y"
+#line 58 "translator.y"
             { 
-                asprintf(&(yyval.chr), "func %s(%s) %s {\n", (yyvsp[-6].variable), (yyvsp[-4].chr), (yyvsp[-7].type));
+                asprintf(&(yyval.chr), "func %s(%s) %s {\n", (yyvsp[-6].variable), (yyvsp[-4].chr), convertToGOTypes((yyvsp[-7].type)));
                 asprintf(&(yyval.chr), "%s%s", (yyval.chr), (yyvsp[-1].chr));
                 asprintf(&(yyval.chr), "%s}", (yyval.chr));
             }
-#line 1315 "y.tab.c"
+#line 1317 "y.tab.c"
     break;
 
   case 9: /* functions: %empty  */
-#line 61 "translator.y"
+#line 63 "translator.y"
       {asprintf(&(yyval.chr), "");}
-#line 1321 "y.tab.c"
+#line 1323 "y.tab.c"
     break;
 
   case 10: /* multi_statements: multi_lines  */
-#line 64 "translator.y"
+#line 66 "translator.y"
                               {asprintf(&(yyval.chr), "%s", (yyvsp[0].chr));}
-#line 1327 "y.tab.c"
+#line 1329 "y.tab.c"
     break;
 
   case 11: /* multi_statements: statement line  */
-#line 65 "translator.y"
+#line 67 "translator.y"
                      { asprintf(&(yyval.chr), "%s%s%*s}\n", (yyvsp[-1].chr), (yyvsp[0].chr), nTab - tabSize, ""); nTab-=tabSize; }
-#line 1333 "y.tab.c"
+#line 1335 "y.tab.c"
     break;
 
   case 12: /* multi_statements: statement '{' multi_statements '}'  */
-#line 66 "translator.y"
+#line 68 "translator.y"
                                          { asprintf(&(yyval.chr), "%s%s%*s}\n", (yyvsp[-3].chr), (yyvsp[-1].chr), nTab - tabSize, ""); nTab-=tabSize; }
-#line 1339 "y.tab.c"
+#line 1341 "y.tab.c"
     break;
 
   case 13: /* multi_statements: multi_statements statement line  */
-#line 67 "translator.y"
+#line 69 "translator.y"
                                       { asprintf(&(yyval.chr), "%s%s%s%*s}\n", (yyvsp[-2].chr), (yyvsp[-1].chr), (yyvsp[0].chr), nTab - tabSize, ""); nTab-=tabSize; }
-#line 1345 "y.tab.c"
+#line 1347 "y.tab.c"
     break;
 
   case 14: /* multi_statements: multi_statements statement '{' multi_statements '}'  */
-#line 68 "translator.y"
+#line 70 "translator.y"
                                                           { asprintf(&(yyval.chr), "%s%s%s%*s}\n", (yyvsp[-4].chr), (yyvsp[-3].chr), (yyvsp[-1].chr), nTab - tabSize, "");  nTab-=tabSize; }
-#line 1351 "y.tab.c"
+#line 1353 "y.tab.c"
     break;
 
   case 15: /* multi_statements: multi_statements multi_lines  */
-#line 69 "translator.y"
+#line 71 "translator.y"
                                    { asprintf(&(yyval.chr), "%s%s", (yyvsp[-1].chr), (yyvsp[0].chr)); }
-#line 1357 "y.tab.c"
+#line 1359 "y.tab.c"
     break;
 
   case 16: /* multi_statements: %empty  */
-#line 70 "translator.y"
+#line 72 "translator.y"
       { asprintf(&(yyval.chr), ""); }
-#line 1363 "y.tab.c"
+#line 1365 "y.tab.c"
     break;
 
   case 17: /* multiple_arguments: argument  */
-#line 74 "translator.y"
+#line 76 "translator.y"
                              { asprintf(&(yyval.chr), "%s", (yyvsp[0].chr)); }
-#line 1369 "y.tab.c"
+#line 1371 "y.tab.c"
     break;
 
   case 18: /* multiple_arguments: multiple_arguments ',' argument  */
-#line 75 "translator.y"
+#line 77 "translator.y"
                                       { asprintf(&(yyval.chr), "%s, %s", (yyvsp[-2].chr), (yyvsp[0].chr)); }
-#line 1375 "y.tab.c"
+#line 1377 "y.tab.c"
     break;
 
   case 19: /* typed_multiple_arguments: TYPE argument  */
-#line 78 "translator.y"
-                                        { asprintf(&(yyval.chr), "%s %s", (yyvsp[0].chr), (yyvsp[-1].type)); }
-#line 1381 "y.tab.c"
+#line 80 "translator.y"
+                                        { asprintf(&(yyval.chr), "%s %s", (yyvsp[0].chr), convertToGOTypes((yyvsp[-1].type))); }
+#line 1383 "y.tab.c"
     break;
 
   case 20: /* typed_multiple_arguments: typed_multiple_arguments ',' TYPE argument  */
-#line 79 "translator.y"
-                                                 { asprintf(&(yyval.chr), "%s, %s %s", (yyvsp[-3].chr), (yyvsp[0].chr), (yyvsp[-1].type)); }
-#line 1387 "y.tab.c"
+#line 81 "translator.y"
+                                                 { asprintf(&(yyval.chr), "%s, %s %s", (yyvsp[-3].chr), (yyvsp[0].chr), convertToGOTypes((yyvsp[-1].type))); }
+#line 1389 "y.tab.c"
     break;
 
   case 22: /* argument: VARIABLE  */
-#line 83 "translator.y"
+#line 85 "translator.y"
                    { asprintf(&(yyval.chr), "%s", (yyvsp[0].variable)); }
-#line 1393 "y.tab.c"
+#line 1395 "y.tab.c"
     break;
 
   case 23: /* argument: NUMBER  */
-#line 84 "translator.y"
+#line 86 "translator.y"
              { asprintf(&(yyval.chr), "%s", (yyvsp[0].number)); }
-#line 1399 "y.tab.c"
+#line 1401 "y.tab.c"
     break;
 
   case 24: /* argument: STRING  */
-#line 85 "translator.y"
+#line 87 "translator.y"
              { asprintf(&(yyval.chr), "%s", (yyvsp[0].string)); }
-#line 1405 "y.tab.c"
+#line 1407 "y.tab.c"
     break;
 
   case 25: /* argument: %empty  */
-#line 86 "translator.y"
+#line 88 "translator.y"
       { asprintf(&(yyval.chr), ""); }
-#line 1411 "y.tab.c"
+#line 1413 "y.tab.c"
     break;
 
   case 26: /* statement: IF '(' condition ')'  */
-#line 89 "translator.y"
+#line 91 "translator.y"
                                 { asprintf(&(yyval.chr), "%*sif %s {\n", nTab, "", (yyvsp[-1].chr)); nTab+=tabSize; }
-#line 1417 "y.tab.c"
+#line 1419 "y.tab.c"
     break;
 
   case 27: /* statement: ELSE IF '(' condition ')'  */
-#line 90 "translator.y"
+#line 92 "translator.y"
                                 { asprintf(&(yyval.chr), "%*selse if %s {\n", nTab, "", (yyvsp[-1].chr)); nTab+=tabSize; }
-#line 1423 "y.tab.c"
+#line 1425 "y.tab.c"
     break;
 
   case 28: /* statement: ELSE  */
-#line 91 "translator.y"
+#line 93 "translator.y"
            { asprintf(&(yyval.chr), "%*selse {\n", nTab, ""); nTab+=tabSize; }
-#line 1429 "y.tab.c"
+#line 1431 "y.tab.c"
     break;
 
   case 29: /* statement: WHILE '(' condition ')'  */
-#line 92 "translator.y"
+#line 94 "translator.y"
                               { asprintf(&(yyval.chr), "%*sfor {\n%*sif %s {\n%*sbreak\n%*s}\n", nTab, "", nTab + tabSize, "", (yyvsp[-1].chr), nTab + tabSize * 2, "", nTab + tabSize, ""); nTab+=tabSize; }
-#line 1435 "y.tab.c"
+#line 1437 "y.tab.c"
     break;
 
   case 30: /* statement: FOR '(' assignment ';' condition ';' assignment ')'  */
-#line 93 "translator.y"
+#line 95 "translator.y"
                                                           { asprintf(&(yyval.chr), "%*sfor %s; %s; %s {\n", nTab, "", (yyvsp[-5].chr), (yyvsp[-3].chr), (yyvsp[-1].chr)); nTab+=tabSize; }
-#line 1441 "y.tab.c"
+#line 1443 "y.tab.c"
     break;
 
   case 31: /* multi_lines: line  */
-#line 96 "translator.y"
+#line 98 "translator.y"
                   { asprintf(&(yyval.chr), "%s", (yyvsp[0].chr)); }
-#line 1447 "y.tab.c"
+#line 1449 "y.tab.c"
     break;
 
   case 32: /* multi_lines: multi_lines line  */
-#line 97 "translator.y"
+#line 99 "translator.y"
                        { asprintf(&(yyval.chr), "%s%s", (yyvsp[-1].chr), (yyvsp[0].chr));}
-#line 1453 "y.tab.c"
+#line 1455 "y.tab.c"
     break;
 
   case 33: /* multi_lines: %empty  */
-#line 98 "translator.y"
+#line 100 "translator.y"
       { asprintf(&(yyval.chr), ""); }
-#line 1459 "y.tab.c"
+#line 1461 "y.tab.c"
     break;
 
   case 34: /* line: assignment ';'  */
-#line 101 "translator.y"
+#line 103 "translator.y"
                      { asprintf(&(yyval.chr), "%*s%s\n", nTab, "", (yyvsp[-1].chr)); }
-#line 1465 "y.tab.c"
+#line 1467 "y.tab.c"
     break;
 
   case 35: /* line: exp ';'  */
-#line 102 "translator.y"
+#line 104 "translator.y"
               { asprintf(&(yyval.chr), "%*s%s\n", nTab, "", (yyvsp[-1].chr)); }
-#line 1471 "y.tab.c"
+#line 1473 "y.tab.c"
     break;
 
   case 36: /* line: called_function ';'  */
-#line 103 "translator.y"
+#line 105 "translator.y"
                           { asprintf(&(yyval.chr), "%*s%s\n", nTab, "", (yyvsp[-1].chr)); }
-#line 1477 "y.tab.c"
+#line 1479 "y.tab.c"
     break;
 
   case 37: /* line: %empty  */
-#line 104 "translator.y"
+#line 106 "translator.y"
       { asprintf(&(yyval.chr), ""); }
-#line 1483 "y.tab.c"
+#line 1485 "y.tab.c"
     break;
 
   case 38: /* called_function: PRINTF '(' STRING ',' multiple_arguments ')'  */
-#line 107 "translator.y"
+#line 109 "translator.y"
                                                               { asprintf(&(yyval.chr), "fmt.Printf(%s, %s)", (yyvsp[-3].string), (yyvsp[-1].chr)); }
-#line 1489 "y.tab.c"
+#line 1491 "y.tab.c"
     break;
 
   case 39: /* called_function: VARIABLE '(' multiple_arguments ')'  */
-#line 108 "translator.y"
+#line 110 "translator.y"
                                           { asprintf(&(yyval.chr), "%s(%s)", (yyvsp[-3].variable), (yyvsp[-1].chr)); }
-#line 1495 "y.tab.c"
+#line 1497 "y.tab.c"
     break;
 
   case 40: /* condition: exp  */
-#line 111 "translator.y"
+#line 113 "translator.y"
                { asprintf(&(yyval.chr), "%s != 0", (yyvsp[0].chr)); }
-#line 1501 "y.tab.c"
+#line 1503 "y.tab.c"
     break;
 
   case 41: /* condition: exp '>' exp  */
-#line 112 "translator.y"
+#line 114 "translator.y"
                   { asprintf(&(yyval.chr), "%s > %s", (yyvsp[-2].chr), (yyvsp[0].chr)); }
-#line 1507 "y.tab.c"
+#line 1509 "y.tab.c"
     break;
 
   case 42: /* condition: exp '<' exp  */
-#line 113 "translator.y"
+#line 115 "translator.y"
                   { asprintf(&(yyval.chr), "%s < %s", (yyvsp[-2].chr), (yyvsp[0].chr)); }
-#line 1513 "y.tab.c"
+#line 1515 "y.tab.c"
     break;
 
   case 43: /* condition: exp EQ exp  */
-#line 114 "translator.y"
+#line 116 "translator.y"
                  { asprintf(&(yyval.chr), "%s == %s", (yyvsp[-2].chr), (yyvsp[0].chr)); }
-#line 1519 "y.tab.c"
+#line 1521 "y.tab.c"
     break;
 
   case 44: /* condition: exp NE exp  */
-#line 115 "translator.y"
+#line 117 "translator.y"
                  { asprintf(&(yyval.chr), "%s != %s", (yyvsp[-2].chr), (yyvsp[0].chr)); }
-#line 1525 "y.tab.c"
+#line 1527 "y.tab.c"
     break;
 
   case 45: /* condition: exp GE exp  */
-#line 116 "translator.y"
+#line 118 "translator.y"
                  { asprintf(&(yyval.chr), "%s >= %s", (yyvsp[-2].chr), (yyvsp[0].chr)); }
-#line 1531 "y.tab.c"
+#line 1533 "y.tab.c"
     break;
 
   case 46: /* condition: exp LE exp  */
-#line 117 "translator.y"
+#line 119 "translator.y"
                  { asprintf(&(yyval.chr), "%s <= %s", (yyvsp[-2].chr), (yyvsp[0].chr)); }
-#line 1537 "y.tab.c"
+#line 1539 "y.tab.c"
     break;
 
   case 47: /* exp: NUMBER  */
-#line 120 "translator.y"
+#line 122 "translator.y"
             { asprintf(&(yyval.chr), "%s", (yyvsp[0].number)); }
-#line 1543 "y.tab.c"
+#line 1545 "y.tab.c"
     break;
 
   case 48: /* exp: VARIABLE  */
-#line 121 "translator.y"
+#line 123 "translator.y"
                { asprintf(&(yyval.chr), "%s", (yyvsp[0].variable)); }
-#line 1549 "y.tab.c"
+#line 1551 "y.tab.c"
     break;
 
   case 49: /* exp: exp '+' exp  */
-#line 122 "translator.y"
+#line 124 "translator.y"
                   {asprintf(&(yyval.chr), "%s + %s", (yyvsp[-2].chr), (yyvsp[0].chr));}
-#line 1555 "y.tab.c"
+#line 1557 "y.tab.c"
     break;
 
   case 50: /* exp: exp '-' exp  */
-#line 123 "translator.y"
+#line 125 "translator.y"
                   {asprintf(&(yyval.chr), "%s - %s", (yyvsp[-2].chr), (yyvsp[0].chr));}
-#line 1561 "y.tab.c"
+#line 1563 "y.tab.c"
     break;
 
   case 51: /* exp: exp '*' exp  */
-#line 124 "translator.y"
+#line 126 "translator.y"
                   {asprintf(&(yyval.chr), "%s * %s", (yyvsp[-2].chr), (yyvsp[0].chr));}
-#line 1567 "y.tab.c"
+#line 1569 "y.tab.c"
     break;
 
   case 52: /* exp: exp '/' exp  */
-#line 125 "translator.y"
+#line 127 "translator.y"
                   {asprintf(&(yyval.chr), "%s / %s", (yyvsp[-2].chr), (yyvsp[0].chr));}
-#line 1573 "y.tab.c"
+#line 1575 "y.tab.c"
     break;
 
   case 53: /* assignment: TYPE VARIABLE  */
-#line 129 "translator.y"
-                          {asprintf(&(yyval.chr), "var %s %s", (yyvsp[0].variable), (yyvsp[-1].type));}
-#line 1579 "y.tab.c"
+#line 131 "translator.y"
+                          {asprintf(&(yyval.chr), "var %s %s", (yyvsp[0].variable), convertToGOTypes((yyvsp[-1].type)));}
+#line 1581 "y.tab.c"
     break;
 
   case 54: /* assignment: VARIABLE '=' exp  */
-#line 130 "translator.y"
+#line 132 "translator.y"
                        {asprintf(&(yyval.chr), "%s = %s", (yyvsp[-2].variable), (yyvsp[0].chr));}
-#line 1585 "y.tab.c"
+#line 1587 "y.tab.c"
     break;
 
   case 55: /* assignment: TYPE VARIABLE '=' exp  */
-#line 131 "translator.y"
+#line 133 "translator.y"
                             {asprintf(&(yyval.chr), "%s := %s", (yyvsp[-2].variable), (yyvsp[0].chr));}
-#line 1591 "y.tab.c"
+#line 1593 "y.tab.c"
     break;
 
 
-#line 1595 "y.tab.c"
+#line 1597 "y.tab.c"
 
       default: break;
     }
@@ -1784,3 +1786,12 @@ yyreturnlab:
   return yyresult;
 }
 
+#line 136 "translator.y"
+
+
+const char *convertToGOTypes(char *string) {
+    if(strcmp(string, "float") == 0) {
+        return "float64";
+    }
+    return string;
+}

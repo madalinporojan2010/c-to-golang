@@ -546,8 +546,8 @@ int yy_flex_debug = 1;
 
 static const flex_int16_t yy_rule_linenum[18] =
     {   0,
-        8,   13,   14,   15,   16,   17,   18,   19,   20,   21,
-       22,   25,   31,   37,   39,   44,   46
+        9,   14,   15,   16,   17,   18,   19,   20,   21,   22,
+       23,   26,   32,   38,   40,   45,   47
     } ;
 
 /* The intent behind this definition is that it'll catch
@@ -562,8 +562,9 @@ char *yytext;
 #line 2 "translator.l"
 #include <stdlib.h>
 #include "y.tab.h"
-#line 566 "lex.yy.c"
+
 #line 567 "lex.yy.c"
+#line 568 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -843,10 +844,10 @@ YY_DECL
 
 	{
 /* %% [7.0] user's declarations go here */
-#line 6 "translator.l"
+#line 7 "translator.l"
 
 
-#line 850 "lex.yy.c"
+#line 851 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -928,7 +929,7 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 8 "translator.l"
+#line 9 "translator.l"
 { 
                    yylval.type = strdup(yytext);
                    return TYPE;
@@ -936,58 +937,58 @@ YY_RULE_SETUP
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 13 "translator.l"
+#line 14 "translator.l"
 return MAIN;
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 14 "translator.l"
+#line 15 "translator.l"
 return GE;
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 15 "translator.l"
+#line 16 "translator.l"
 return LE;
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 16 "translator.l"
+#line 17 "translator.l"
 return EQ;
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 17 "translator.l"
+#line 18 "translator.l"
 return NE;
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 18 "translator.l"
+#line 19 "translator.l"
 return FOR;
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 19 "translator.l"
+#line 20 "translator.l"
 return WHILE;
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 20 "translator.l"
+#line 21 "translator.l"
 return IF;
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 21 "translator.l"
+#line 22 "translator.l"
 return ELSE;
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 22 "translator.l"
+#line 23 "translator.l"
 return PRINTF;
 	YY_BREAK
 /* variables */
 case 12:
 YY_RULE_SETUP
-#line 25 "translator.l"
+#line 26 "translator.l"
 {
                    yylval.variable = strdup(yytext);
                    return VARIABLE;
@@ -996,7 +997,7 @@ YY_RULE_SETUP
 /* integers */                 
 case 13:
 YY_RULE_SETUP
-#line 31 "translator.l"
+#line 32 "translator.l"
 {
                    yylval.number = strdup(yytext);
                    return NUMBER;
@@ -1005,13 +1006,13 @@ YY_RULE_SETUP
 /* operators */
 case 14:
 YY_RULE_SETUP
-#line 37 "translator.l"
+#line 38 "translator.l"
 return *yytext;
 	YY_BREAK
 case 15:
 /* rule 15 can match eol */
 YY_RULE_SETUP
-#line 39 "translator.l"
+#line 40 "translator.l"
 {
                    yylval.string = strdup(yytext);
                    return STRING;
@@ -1020,20 +1021,20 @@ YY_RULE_SETUP
 case 16:
 /* rule 16 can match eol */
 YY_RULE_SETUP
-#line 44 "translator.l"
+#line 45 "translator.l"
 ;      // Skip whitespaces.
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 46 "translator.l"
+#line 47 "translator.l"
 yyerror("Unknown character.\n");
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 48 "translator.l"
+#line 49 "translator.l"
 ECHO;
 	YY_BREAK
-#line 1037 "lex.yy.c"
+#line 1038 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2182,7 +2183,7 @@ void yyfree (void * ptr )
 
 /* %ok-for-header */
 
-#line 48 "translator.l"
+#line 49 "translator.l"
 
 
 int yywrap(void)
