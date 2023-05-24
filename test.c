@@ -41,5 +41,7 @@ int main()
         {
             a = 5;
         }
+
+        printf("%d %s %d %d", 4, "test", 1, 2);
     }
 }

@@ -40,5 +40,6 @@ func main() {
         else if 4 != 0 {
             a = 5
         }
+        fmt.Printf("%d %s %d %d", 4, "test", 1, 2)
     }
 }

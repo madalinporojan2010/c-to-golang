@@ -10,7 +10,7 @@ int tabSize = 4;
 int nTab = 4;
 %}
 
-%union {char *number; char *variable; char *type; char *chr; }         /* Yacc definitions */
+%union {char *number; char *variable; char *type; char *string; char *chr; }         /* Yacc definitions */
 %start program
 
 %token MAIN 
@@ -23,8 +23,9 @@ int nTab = 4;
 %token <variable> VARIABLE
 %token <type> TYPE
 %token <number> NUMBER
+%token <string> STRING
 
-%type <chr> exp assignment line statement condition multi_lines multi_statements
+%type <chr> exp assignment line statement condition multi_lines multi_statements called_function multiple_arguments argument
 
 
 %%
@@ -53,6 +54,16 @@ multi_statements: multi_lines {asprintf(&$$, "%s", $1);}
     ;
 
 
+multiple_arguments: argument { asprintf(&$$, "%s", $1); }
+    | multiple_arguments ',' argument { asprintf(&$$, "%s, %s", $1, $3); }
+    ;
+
+argument: VARIABLE { asprintf(&$$, "%s", $1); }
+    | NUMBER { asprintf(&$$, "%s", $1); }
+    | STRING { asprintf(&$$, "%s", $1); }
+    | { asprintf(&$$, ""); }
+    ;
+
 statement: IF '(' condition ')' { asprintf(&$$, "%*sif %s {\n", nTab, "", $3); nTab+=tabSize; }
     | ELSE IF '(' condition ')' { asprintf(&$$, "%*selse if %s {\n", nTab, "", $4); nTab+=tabSize; }
     | ELSE { asprintf(&$$, "%*selse {\n", nTab, ""); nTab+=tabSize; }
@@ -67,7 +78,11 @@ multi_lines: line { asprintf(&$$, "%s", $1); }
 
 line: assignment ';' { asprintf(&$$, "%*s%s\n", nTab, "", $1); }
     | exp ';' { asprintf(&$$, "%*s%s\n", nTab, "", $1); }
+    | called_function ';' { asprintf(&$$, "%*s%s\n", nTab, "", $1); }
     | { asprintf(&$$, ""); }
+    ;
+
+called_function: PRINTF '(' STRING ',' multiple_arguments ')' { asprintf(&$$, "fmt.Printf(%s, %s)", $3, $5); }
     ;
 
 condition: exp { asprintf(&$$, "%s != 0", $1); }

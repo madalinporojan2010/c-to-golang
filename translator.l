@@ -4,7 +4,6 @@
 %}
 
 %%
- 
 
 ("int"|"float") { 
                    yylval.type = strdup(yytext);
@@ -35,7 +34,12 @@
                 }
 
   /* operators */
-[-()<>=+/*{};] return *yytext;
+[-()<>=+/*{};,] return *yytext;
+
+\"([^\"]|\n)*\" {
+                   yylval.string = strdup(yytext);
+                   return STRING;
+                }
 
 [ \t\n]+        ;      // Skip whitespaces.
 
