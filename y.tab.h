@@ -65,10 +65,11 @@ extern int yydebug;
     NE = 266,                      /* NE  */
     PRINTF = 267,                  /* PRINTF  */
     SCANF = 268,                   /* SCANF  */
-    VARIABLE = 269,                /* VARIABLE  */
-    TYPE = 270,                    /* TYPE  */
-    NUMBER = 271,                  /* NUMBER  */
-    STRING = 272                   /* STRING  */
+    RETURN = 269,                  /* RETURN  */
+    VARIABLE = 270,                /* VARIABLE  */
+    TYPE = 271,                    /* TYPE  */
+    NUMBER = 272,                  /* NUMBER  */
+    STRING = 273                   /* STRING  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -88,10 +89,11 @@ extern int yydebug;
 #define NE 266
 #define PRINTF 267
 #define SCANF 268
-#define VARIABLE 269
-#define TYPE 270
-#define NUMBER 271
-#define STRING 272
+#define RETURN 269
+#define VARIABLE 270
+#define TYPE 271
+#define NUMBER 272
+#define STRING 273
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -100,7 +102,7 @@ union YYSTYPE
 #line 15 "translator.y"
 char *number; char *variable; char *type; char *string; char *chr; 
 
-#line 104 "y.tab.h"
+#line 106 "y.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

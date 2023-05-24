@@ -6,7 +6,8 @@
 
 %%
 
-("int"|"float"|"char") { 
+
+("int"|"float"|"char"|"void"|"bool") { 
                    yylval.type = strdup(yytext);
                    return TYPE;
                 }
@@ -22,6 +23,7 @@
 "else"          return ELSE;
 "printf"        return PRINTF;
 "scanf"         return SCANF;
+"return"        return RETURN;
 
   /* variables */
 [a-zA-Z]+       {
@@ -36,7 +38,7 @@
                 }
 
   /* operators */
-[-()<>=+/*{};,] return *yytext;
+[-()<>=+/*{};,&] return *yytext;
 
 \"([^\"]|\n)*\" {
                    yylval.string = strdup(yytext);

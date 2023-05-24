@@ -20,7 +20,7 @@ const char*convertToGOTypes(char *type);
 
 %token GE LE EQ NE
 
-%token PRINTF SCANF
+%token PRINTF SCANF RETURN
 
 %token <variable> VARIABLE
 %token <type> TYPE
@@ -79,7 +79,7 @@ multiple_arguments: argument { asprintf(&$$, "%s", $1); }
 
 typed_multiple_arguments: TYPE argument { asprintf(&$$, "%s %s", $2, convertToGOTypes($1)); }
     | typed_multiple_arguments ',' TYPE argument { asprintf(&$$, "%s, %s %s", $1, $4, convertToGOTypes($3)); }
-    |
+    | { asprintf(&$$, ""); }
     ;
 
 argument: STRING { asprintf(&$$, "%s", $1); }
@@ -102,6 +102,11 @@ multi_lines: line { asprintf(&$$, "%s", $1); }
 line: assignment ';' { asprintf(&$$, "%*s%s\n", nTab, "", $1); }
     | exp ';' { asprintf(&$$, "%*s%s\n", nTab, "", $1); }
     | called_function ';' { asprintf(&$$, "%*s%s\n", nTab, "", $1); }
+    | condition ';' { asprintf(&$$, "%*s%s\n", nTab, "", $1); }
+    | RETURN ';' {asprintf(&$$, "%*sreturn\n", nTab, "");}
+    | RETURN exp ';' {asprintf(&$$, "%*sreturn %s\n", nTab, "", $2);}
+    | RETURN condition ';' {asprintf(&$$, "%*sreturn %s\n", nTab, "", $2);}
+    | RETURN called_function ';' {asprintf(&$$, "%*sreturn %s\n", nTab, "", $2);}
     | { asprintf(&$$, ""); }
     ;
 
@@ -127,6 +132,8 @@ exp: NUMBER { asprintf(&$$, "%s", $1); }
     | exp '-' exp {asprintf(&$$, "%s - %s", $1, $3);}
     | exp '*' exp {asprintf(&$$, "%s * %s", $1, $3);}
     | exp '/' exp {asprintf(&$$, "%s / %s", $1, $3);}
+    | '&' exp {asprintf(&$$, "&%s", $2);}
+    | '*' exp {asprintf(&$$, "*%s", $2);}
     | '(' exp ')' {asprintf(&$$, "(%s)", $2);}
     ;
 
@@ -139,10 +146,12 @@ assignment: TYPE VARIABLE {asprintf(&$$, "var %s %s", $2, convertToGOTypes($1));
 %%
 
 const char *convertToGOTypes(char *string) {
-    if(strcmp(string, "float") == 0) {
+    if (strcmp(string, "float") == 0) {
         return "float64";
-    } else if(strcmp(string, "char") == 0) {
+    } else if (strcmp(string, "char") == 0) {
         return "byte";
+    } else if (strcmp(string, "void") == 0) {
+        return "";
     } else {
         return string;
     }

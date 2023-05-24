@@ -16,6 +16,11 @@ func testFunction(varx int, vary float64) int {
     var a byte
     a = 4
     a = 4
+    return 2 + test(2, "test")
+}
+func test()  {
+    return
+    return 2 > 3
 }
 func main() {
     if 4 != 0 {
@@ -59,6 +64,6 @@ func main() {
             fmt.Printf("%d %s %d %d", 4, "test", 1, 2)
         }
         fmt.Printf("%d %s %d %d", 4, "test", 1, 2)
-        fmt.Scanf("%d %s %d %d", 4, "test", 1, 2)
+        fmt.Scanf("%d %s %d %d", &a, &n, &b, &c)
     }
 }

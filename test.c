@@ -15,6 +15,13 @@ int testFunction(int varx, float vary)
     char a;
     a = 4;
     a = 4;
+    return 2 + test(2, "test");
+}
+
+void test()
+{
+    return;
+    return 2 > 3;
 }
 
 int main()
@@ -67,6 +74,6 @@ int main()
         }
 
         printf("%d %s %d %d", 4, "test", 1, 2);
-        scanf("%d %s %d %d", 4, "test", 1, 2);
+        scanf("%d %s %d %d", &a, &n, &b, &c);
     }
 }
