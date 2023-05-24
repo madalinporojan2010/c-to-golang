@@ -1281,7 +1281,7 @@ yyreduce:
 
   case 13: /* multi_lines: %empty  */
 #line 60 "translator.y"
-      { asprintf(&(yyval.chr), ""); }
+      { asprintf(&(yyval.chr), "\n"); }
 #line 1286 "y.tab.c"
     break;
 
@@ -1299,7 +1299,7 @@ yyreduce:
 
   case 16: /* line: %empty  */
 #line 65 "translator.y"
-      { asprintf(&(yyval.chr), ""); }
+      { asprintf(&(yyval.chr), "\n"); }
 #line 1304 "y.tab.c"
     break;
 

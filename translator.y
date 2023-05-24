@@ -57,12 +57,12 @@ statement: IF '(' condition ')' { asprintf(&$$, "%*sif (%s) {\n", nTab, "", $3);
     
 multi_lines: line { asprintf(&$$, "%s", $1); }
     | multi_lines line { asprintf(&$$, "%s%*s%s", $1, nTab, "", $2); }
-    | { asprintf(&$$, ""); }
+    | { asprintf(&$$, "\n"); }
     ;
 
 line: assignment ';' { asprintf(&$$, "%*s%s\n", nTab, "", $1); }
     | exp ';' { asprintf(&$$, "%*s%s\n", nTab, "", $1); }
-    | { asprintf(&$$, ""); }
+    | { asprintf(&$$, "\n"); }
     ;
 
 condition: exp { asprintf(&$$, "%s != 0", $1); }
