@@ -7,7 +7,7 @@ void yyerror (char *s);
 #include <string.h>
 
 int tabSize = 4;
-int nTab = 0;
+int nTab = 4;
 %}
 
 %union {char *number; char *variable; char *type; char *chr; }         /* Yacc definitions */
@@ -36,18 +36,17 @@ program: TYPE MAIN '(' ')' '{' multi_statements '}'
                 printf(")\n\n");
 
                 printf("func main() {\n");
-                nTab+=tabSize;
-                printf("%*s%s", nTab, "", $6);
+                printf("%s", $6);
                 printf("}");
             }
     | 
     ;
 
-multi_statements: multi_lines {asprintf(&$$, "%*s%s", nTab, "", $1);}
-    | statement line { asprintf(&$$, "%s%*s%s%*s}\n", $1, nTab, "", $2, nTab, ""); nTab-=tabSize; }
-    | statement '{' multi_lines '}' { asprintf(&$$, "%s%*s%s%*s}\n", $1, nTab, "", $3, nTab, ""); nTab-=tabSize; }
-    | multi_statements statement line { asprintf(&$$, "%s%s%*s%s%*s}\n", $1, $2, nTab, "", $3, nTab, ""); nTab-=tabSize; }
-    | multi_statements statement '{' multi_lines '}' { asprintf(&$$, "%s%s%*s%s%*s}\n", $1, $2, nTab, "", $4, nTab, "");  nTab-=tabSize; }
+multi_statements: multi_lines {asprintf(&$$, "%s", $1);}
+    | statement line { asprintf(&$$, "%s%s%*s}\n", $1, $2, nTab - tabSize, ""); nTab-=tabSize; }
+    | statement '{' multi_lines '}' { asprintf(&$$, "%s%s%*s}\n", $1, $3, nTab - tabSize, ""); nTab-=tabSize; }
+    | multi_statements statement line { asprintf(&$$, "%s%s%s%*s}\n", $1, $2, $3, nTab - tabSize, ""); nTab-=tabSize; }
+    | multi_statements statement '{' multi_lines '}' { asprintf(&$$, "%s%s%s%*s}\n", $1, $2, $4, nTab - tabSize, "");  nTab-=tabSize; }
     | { asprintf(&$$, ""); }
     ;
 
@@ -56,13 +55,13 @@ statement: IF '(' condition ')' { asprintf(&$$, "%*sif (%s) {\n", nTab, "", $3);
     ;
     
 multi_lines: line { asprintf(&$$, "%s", $1); }
-    | multi_lines line { asprintf(&$$, "%s%*s%s", $1, nTab, "", $2); }
-    | { asprintf(&$$, "\n"); }
+    | multi_lines line { asprintf(&$$, "%s%s", $1, $2);}
+    | { asprintf(&$$, ""); }
     ;
 
 line: assignment ';' { asprintf(&$$, "%*s%s\n", nTab, "", $1); }
     | exp ';' { asprintf(&$$, "%*s%s\n", nTab, "", $1); }
-    | { asprintf(&$$, "\n"); }
+    | { asprintf(&$$, ""); }
     ;
 
 condition: exp { asprintf(&$$, "%s != 0", $1); }
