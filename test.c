@@ -28,5 +28,18 @@ int main()
 
     for (int i = 0; i < 4; i = i + 1)
     {
+        while (1 > 3)
+        {
+            a = 4 + 2 + 1;
+        }
+
+        if (4)
+        {
+            a = 4;
+        }
+        else if (4)
+        {
+            a = 5;
+        }
     }
 }

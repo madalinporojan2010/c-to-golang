@@ -26,6 +26,7 @@ int nTab = 4;
 
 %type <chr> exp assignment line statement condition multi_lines multi_statements
 
+
 %%
 
 program: TYPE MAIN '(' ')' '{' multi_statements '}' 
@@ -53,6 +54,8 @@ multi_statements: multi_lines {asprintf(&$$, "%s", $1);}
 
 
 statement: IF '(' condition ')' { asprintf(&$$, "%*sif %s {\n", nTab, "", $3); nTab+=tabSize; }
+    | ELSE IF '(' condition ')' { asprintf(&$$, "%*selse if %s {\n", nTab, "", $4); nTab+=tabSize; }
+    | ELSE { asprintf(&$$, "%*selse {\n", nTab, ""); nTab+=tabSize; }
     | WHILE '(' condition ')' { asprintf(&$$, "%*sfor {\n%*sif %s {\n%*sbreak\n%*s}\n", nTab, "", nTab + tabSize, "", $3, nTab + tabSize * 2, "", nTab + tabSize, ""); nTab+=tabSize; }
     | FOR '(' assignment ';' condition ';' assignment ')' { asprintf(&$$, "%*sfor %s; %s; %s {\n", nTab, "", $3, $5, $7); nTab+=tabSize; }
     ;

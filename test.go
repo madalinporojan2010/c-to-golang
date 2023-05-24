@@ -28,5 +28,17 @@ func main() {
         a = 4 + 2 + 1
     }
     for i := 0; i < 4; i = i + 1 {
+        for {
+            if 1 > 3 {
+                break
+            }
+            a = 4 + 2 + 1
+        }
+        if 4 != 0 {
+            a = 4
+        }
+        else if 4 != 0 {
+            a = 5
+        }
     }
 }
