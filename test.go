@@ -21,4 +21,10 @@ func main() {
     if (a > b) {
         a = 5
     }
+    for {
+        if(1 > 3) {
+            break
+        }
+        a = 4 + 2 + 1
+    }
 }

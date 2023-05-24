@@ -53,6 +53,7 @@ multi_statements: multi_lines {asprintf(&$$, "%s", $1);}
 
 
 statement: IF '(' condition ')' { asprintf(&$$, "%*sif (%s) {\n", nTab, "", $3); nTab+=tabSize; }
+    | WHILE '(' condition ')' { asprintf(&$$, "%*sfor {\n%*sif(%s) {\n%*sbreak\n%*s}\n", nTab, "", nTab + tabSize, "", $3, nTab + tabSize * 2, "", nTab + tabSize, ""); nTab+=tabSize; }
     ;
     
 multi_lines: line { asprintf(&$$, "%s", $1); }
