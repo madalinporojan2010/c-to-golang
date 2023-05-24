@@ -32,7 +32,7 @@ program: TYPE MAIN '(' ')' '{' multi_statements '}'
             { 
                 printf("package main\n\n");
                 printf("import (\n");
-                printf("\"fmt\"\n");
+                printf("\t\"fmt\"\n");
                 printf(")\n\n");
 
                 printf("func main() {\n");
@@ -52,8 +52,9 @@ multi_statements: multi_lines {asprintf(&$$, "%s", $1);}
     ;
 
 
-statement: IF '(' condition ')' { asprintf(&$$, "%*sif (%s) {\n", nTab, "", $3); nTab+=tabSize; }
-    | WHILE '(' condition ')' { asprintf(&$$, "%*sfor {\n%*sif(%s) {\n%*sbreak\n%*s}\n", nTab, "", nTab + tabSize, "", $3, nTab + tabSize * 2, "", nTab + tabSize, ""); nTab+=tabSize; }
+statement: IF '(' condition ')' { asprintf(&$$, "%*sif %s {\n", nTab, "", $3); nTab+=tabSize; }
+    | WHILE '(' condition ')' { asprintf(&$$, "%*sfor {\n%*sif %s {\n%*sbreak\n%*s}\n", nTab, "", nTab + tabSize, "", $3, nTab + tabSize * 2, "", nTab + tabSize, ""); nTab+=tabSize; }
+    | FOR '(' assignment ';' condition ';' assignment ')' { asprintf(&$$, "%*sfor %s; %s; %s {\n", nTab, "", $3, $5, $7); nTab+=tabSize; }
     ;
     
 multi_lines: line { asprintf(&$$, "%s", $1); }
