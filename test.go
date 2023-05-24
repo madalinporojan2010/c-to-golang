@@ -7,7 +7,7 @@ import (
 func testFunction(varx int, vary float64) int {
     if 4 != 0 {
         if 2 != 0 {
-            a = 4
+            a = 4 + (2 + 4)
         }
         if 2 > 3 {
             a = 4
@@ -47,7 +47,7 @@ func main() {
             if 1 > 3 {
                 break
             }
-            a = just(1) + multiple(23, 1, "asdf") + 1
+            a = (just(1) + multiple(23, 1, "asdf")) + 1
             a := just(1) + multiple(23, 1, "asdf") + 1
         }
         if 4 != 0 {

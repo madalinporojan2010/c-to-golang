@@ -5,7 +5,7 @@ int testFunction(int varx, float vary)
     {
         if (2)
         {
-            a = 4;
+            a = 4 + (2 + 4);
         }
         if (2 > 3)
         {
@@ -51,7 +51,7 @@ int main()
     {
         while (1 > 3)
         {
-            a = just(1) + multiple(23, 1, "asdf") + 1;
+            a = (just(1) + multiple(23, 1, "asdf")) + 1;
             int a = just(1) + multiple(23, 1, "asdf") + 1;
         }
 

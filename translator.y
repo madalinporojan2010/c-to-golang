@@ -117,6 +117,7 @@ condition: exp { asprintf(&$$, "%s != 0", $1); }
     | exp NE exp { asprintf(&$$, "%s != %s", $1, $3); }
     | exp GE exp { asprintf(&$$, "%s >= %s", $1, $3); }
     | exp LE exp { asprintf(&$$, "%s <= %s", $1, $3); }
+    | '(' exp ')' { asprintf(&$$, "(%s)", $2); }
     ;
 
 exp: NUMBER { asprintf(&$$, "%s", $1); }
@@ -126,6 +127,7 @@ exp: NUMBER { asprintf(&$$, "%s", $1); }
     | exp '-' exp {asprintf(&$$, "%s - %s", $1, $3);}
     | exp '*' exp {asprintf(&$$, "%s * %s", $1, $3);}
     | exp '/' exp {asprintf(&$$, "%s / %s", $1, $3);}
+    | '(' exp ')' {asprintf(&$$, "(%s)", $2);}
     ;
 
 
