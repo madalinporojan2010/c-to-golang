@@ -13,9 +13,9 @@ int testFunction(int varx, float vary)
         }
     }
     char a;
-    a = 4;
-    a = 4;
-    return 2 + test(2, "test");
+    a = false;
+    a = true;
+    return 2 + test(true, "test");
 }
 
 void test()
@@ -28,14 +28,14 @@ int main()
 {
     if (4)
     {
-        if (2)
+        if (true && 4)
         {
             a = 4;
         }
         if (2 > 3)
         {
             a = 4;
-            testFunction(2 / 5, 3);
+            testFunction(b / 5, 3);
         }
     }
     a = 4;

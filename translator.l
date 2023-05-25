@@ -17,6 +17,10 @@
 "<="            return LE;
 "=="            return EQ;
 "!="            return NE;
+"&&"            return AND;
+"||"            return OR;
+"true"          return TRUE;
+"false"         return FALSE;
 "for"           return FOR;
 "while"         return WHILE;
 "if"            return IF;
@@ -38,7 +42,7 @@
                 }
 
   /* operators */
-[-()<>=+/*{};,&] return *yytext;
+[-()<>=+/*{};,&!] return *yytext;
 
 \"([^\"]|\n)*\" {
                    yylval.string = strdup(yytext);

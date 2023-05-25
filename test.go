@@ -5,8 +5,8 @@ import (
 )
 
 func testFunction(varx int, vary float64) int {
-    if 4 != 0 {
-        if 2 != 0 {
+    if 4 {
+        if 2 {
             a = 4 + (2 + 4)
         }
         if 2 > 3 {
@@ -14,22 +14,22 @@ func testFunction(varx int, vary float64) int {
         }
     }
     var a byte
-    a = 4
-    a = 4
-    return 2 + test(2, "test")
+    a = false
+    a = true
+    return 2 + test(true, "test")
 }
 func test()  {
     return
     return 2 > 3
 }
 func main() {
-    if 4 != 0 {
-        if 2 != 0 {
+    if 4 {
+        if true && 4 {
             a = 4
         }
         if 2 > 3 {
             a = 4
-            testFunction(2 / 5, 3)
+            testFunction(b / 5, 3)
         }
     }
     a = 4
@@ -55,11 +55,11 @@ func main() {
             a = (just(1) + multiple(23, 1, "asdf")) + 1
             a := just(1) + multiple(23, 1, "asdf") + 1
         }
-        if 4 != 0 {
+        if 4 {
             a = 4
             fmt.Printf("%d %s %d %d", 4, "test", 1, 2)
         }
-        else if 4 != 0 {
+        else if 4 {
             a = 5
             fmt.Printf("%d %s %d %d", 4, "test", 1, 2)
         }

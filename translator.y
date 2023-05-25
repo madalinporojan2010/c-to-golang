@@ -18,7 +18,7 @@ const char*convertToGOTypes(char *type);
 %token MAIN 
 %token FOR WHILE IF ELSE
 
-%token GE LE EQ NE
+%token GE LE EQ NE AND OR TRUE FALSE
 
 %token PRINTF SCANF RETURN
 
@@ -115,18 +115,23 @@ called_function: PRINTF '(' STRING ',' multiple_arguments ')' { asprintf(&$$, "f
     | VARIABLE '(' multiple_arguments ')' { asprintf(&$$, "%s(%s)", $1, $3); }
     ;
 
-condition: exp { asprintf(&$$, "%s != 0", $1); }
-    | exp '>' exp { asprintf(&$$, "%s > %s", $1, $3); }
-    | exp '<' exp { asprintf(&$$, "%s < %s", $1, $3); }
-    | exp EQ exp { asprintf(&$$, "%s == %s", $1, $3); }
-    | exp NE exp { asprintf(&$$, "%s != %s", $1, $3); }
-    | exp GE exp { asprintf(&$$, "%s >= %s", $1, $3); }
-    | exp LE exp { asprintf(&$$, "%s <= %s", $1, $3); }
-    | '(' exp ')' { asprintf(&$$, "(%s)", $2); }
+condition: exp { asprintf(&$$, "%s", $1); }
+    | '!' condition { asprintf(&$$, "!%s", $2); }
+    | condition '>' condition { asprintf(&$$, "%s > %s", $1, $3); }
+    | condition '<' condition { asprintf(&$$, "%s < %s", $1, $3); }
+    | condition EQ condition { asprintf(&$$, "%s == %s", $1, $3); }
+    | condition NE condition { asprintf(&$$, "%s != %s", $1, $3); }
+    | condition GE condition { asprintf(&$$, "%s >= %s", $1, $3); }
+    | condition LE condition { asprintf(&$$, "%s <= %s", $1, $3); }
+    | condition AND condition { asprintf(&$$, "%s && %s", $1, $3); }
+    | condition OR condition { asprintf(&$$, "%s || %s", $1, $3); }
+    | '(' condition ')' { asprintf(&$$, "(%s)", $2); }
     ;
 
 exp: NUMBER { asprintf(&$$, "%s", $1); }
     | VARIABLE { asprintf(&$$, "%s", $1); }
+    | TRUE { asprintf(&$$, "true"); }
+    | FALSE { asprintf(&$$, "false"); }
     | called_function { asprintf(&$$, "%s", $1); }
     | exp '+' exp {asprintf(&$$, "%s + %s", $1, $3);}
     | exp '-' exp {asprintf(&$$, "%s - %s", $1, $3);}

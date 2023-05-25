@@ -63,13 +63,17 @@ extern int yydebug;
     LE = 264,                      /* LE  */
     EQ = 265,                      /* EQ  */
     NE = 266,                      /* NE  */
-    PRINTF = 267,                  /* PRINTF  */
-    SCANF = 268,                   /* SCANF  */
-    RETURN = 269,                  /* RETURN  */
-    VARIABLE = 270,                /* VARIABLE  */
-    TYPE = 271,                    /* TYPE  */
-    NUMBER = 272,                  /* NUMBER  */
-    STRING = 273                   /* STRING  */
+    AND = 267,                     /* AND  */
+    OR = 268,                      /* OR  */
+    TRUE = 269,                    /* TRUE  */
+    FALSE = 270,                   /* FALSE  */
+    PRINTF = 271,                  /* PRINTF  */
+    SCANF = 272,                   /* SCANF  */
+    RETURN = 273,                  /* RETURN  */
+    VARIABLE = 274,                /* VARIABLE  */
+    TYPE = 275,                    /* TYPE  */
+    NUMBER = 276,                  /* NUMBER  */
+    STRING = 277                   /* STRING  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -87,13 +91,17 @@ extern int yydebug;
 #define LE 264
 #define EQ 265
 #define NE 266
-#define PRINTF 267
-#define SCANF 268
-#define RETURN 269
-#define VARIABLE 270
-#define TYPE 271
-#define NUMBER 272
-#define STRING 273
+#define AND 267
+#define OR 268
+#define TRUE 269
+#define FALSE 270
+#define PRINTF 271
+#define SCANF 272
+#define RETURN 273
+#define VARIABLE 274
+#define TYPE 275
+#define NUMBER 276
+#define STRING 277
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -102,7 +110,7 @@ union YYSTYPE
 #line 15 "translator.y"
 char *number; char *variable; char *type; char *string; char *chr; 
 
-#line 106 "y.tab.h"
+#line 114 "y.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
